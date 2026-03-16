@@ -1,11 +1,14 @@
-**not a part or Outfit7
+**Not a part or Outfit7**
 
 if you use the code in any 
 way make sure to give credit 
 where it is due please and 
 thank you
 
-to run game
+To run game
 =============================
-compile c program and then
-run c program
+Compile the program and then run it, for example :
+```bash
+gcc TalkingTom.c -o TalkingTom
+./TalkingTom
+```

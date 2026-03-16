@@ -20,6 +20,8 @@ void oldTomArt();
 
 void printUI(int tomHappiness, int tomFeeding, int tomBathroom, int tomSleep);
 
+void drawGame(int h, int f, int b, int s);
+
 int main()
 {
 
@@ -99,16 +101,9 @@ int main()
    //Main gameloop
    do 
    {
-      //Clear screen
-      clearScreen();
-
-      //Prints the Tom character
-      printTom();
-
-      //Prints Tom stats UI
-      printUI(tomHappiness, tomFeeding, tomBathroom, tomSleep);
-
-      //Asks user what they want to do
+      drawGame(tomHappiness, tomFeeding, tomBathroom, tomSleep);
+        
+      // Asks user what they want to do
       getAction();
       scanf(" %c", &actionLetter);
 
@@ -187,9 +182,7 @@ int main()
       if (tomFeeding <= 0 || tomBathroom <= 0 || tomSleep <= 0 || 
             tomHappiness < 0)
       {
-         clearScreen();
-         printTom();
-         printUI(tomHappiness, tomFeeding, tomBathroom, tomSleep);
+         drawGame(tomHappiness, tomFeeding, tomBathroom, tomSleep);
 
          printf("You made Tom sad today :(\n");
          printf("Run the program again to retry.\n");
@@ -200,9 +193,7 @@ int main()
       else if (tomFeeding >= 100 && tomBathroom >= 100 && tomSleep >= 100 && 
                   tomHappiness >=100)
       {
-         clearScreen();
-         printTom();
-         printUI(tomHappiness, tomFeeding, tomBathroom, tomSleep);
+         drawGame(tomHappiness, tomFeeding, tomBathroom, tomSleep);
 
          printf("A perfect day!!! WOW, what a lucky cat.");
          printf("You finished the game in %d moves\n", gameRan);
@@ -212,9 +203,7 @@ int main()
       //Checks if player has won
       else if (tomHappiness >= 100)
       {
-         clearScreen();
-         printTom();
-         printUI(tomHappiness, tomFeeding, tomBathroom, tomSleep);
+         drawGame(tomHappiness, tomFeeding, tomBathroom, tomSleep);
 
          printf("Yay!! Tom is happy again. You win!\n");
          printf("You finished the game in %d moves\n", gameRan);
@@ -232,9 +221,9 @@ int main()
  *****************************************************************************/
 void clearScreen()
 {
-   system("clear"); //use for Mac and Linux
+   //system("clear"); //use for Mac and Linux // This is slow and it depends on shell
    //system("cls");   //use for Windows
-   return;
+   printf("\033[2J\033[H"); // faster than system("clear");
 }
 
  /*****************************************************************************
@@ -252,7 +241,6 @@ void tomAgeGetter(int ageOfTom, bool *gettingAge)
      printTom = oldTomArt;
      *gettingAge = false;
    }
-   return;
 }
  /*****************************************************************************
   Prints the Tom logo.
@@ -279,7 +267,6 @@ void printLogo()
 void getAction()
 {
    printf("How would you like to make Tom happy? ");
-   return;
 }
 
  /*****************************************************************************
@@ -306,7 +293,6 @@ void helpInfo()
    printf("6. 'S' for save code\n");
    printf("    -  Gives code so you can play with Tom again\n");
    printf("    -  Keep the code safe so Ben doesn't steal it\n");
-   return;
 }
  /*****************************************************************************
   Prints the younger Tom character. 
@@ -352,7 +338,6 @@ void youngTomArt()
    printf("          ..+.  -##..  ..##++#-   ..+-.                       \n");
    printf("            ..- -..++--++.   -++--++--+-.                     \n");
    printf("              ..-++++++--     --+++++--..                     \n");
-   return;
 }
 
  /*****************************************************************************
@@ -408,7 +393,6 @@ void oldTomArt()
    printf("             ++-.  +       +               +.     #. +-+        \n");
    printf("             .++#-.#+...-+.                 .-.  -+-.-.         \n");
    printf("                                              .---.             \n");
-   return;  
 }
 
  /*****************************************************************************
@@ -424,4 +408,12 @@ void printUI(int tomHappiness, int tomFeeding, int tomBathroom, int tomSleep)
    printf(" need |  \\____/     \\____/    \\____/    \\____/ |happy\n" );
    printf(" help | Happiness  Feeding   Bathroom   Sleepy |\n"          );
    printf("======================================================\n"    );
+}
+
+void
+drawGame(int h, int f, int b, int s)
+{
+    clearScreen(); // Cleans the screen
+    printTom(); // Prints the tom character
+    printUI(h, f, b, s);
 }
